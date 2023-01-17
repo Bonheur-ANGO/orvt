@@ -44,6 +44,7 @@ de couches qui consiste à disposer différentes couches d’objets les unes sur
 ## **3 - Web Mapping**
 Une carte géographique est une représentation graphique d'un espace géographique. Avec l'évolution des technologies et d'internet, le besoin d'affichage de carte géographique sur tous types d'écrans devient de plus en plus demandé par les utilisateurs et cela est possible grâce au Web mapping. Le web mapping ou cartographie web est la forme de cartographie qui fait usage d’internet afin de concevoir, traiter, produire et publier des cartes géographiques. Ces communications sont possibles grâce à un ensemble de règles appelées protocole. L’Open Géospatial Consortium (OGC) est une organisation internationale qui implémente des standards pour les services et le contenu géospatial, le traitement de données géographiques et les formats d’échange.
 Parmi les spécifications, les plus couramment utilisés à l'IGN sont :
+
 - **Web Feature Service (WFS)** : Permet au moyen d’une URL formatée, d’interroger des 
 serveurs cartographiques afin de manipuler des objets géographiques vectoriels. Les opérations de manipulations permettent de : créer de nouveaux objets, effacer, récupérer, rechercher ou mettre à jour des objets. Le protocole WFS permet d'effectuer 5 principales requêtes afin d'obtenir des informations :
     - GetCapabilities : permet de connaître les capacités du serveur (quelles opérations sont supportées et quels objets sont fournis).
@@ -65,9 +66,53 @@ serveurs cartographiques afin de manipuler des objets géographiques vectoriels.
         - COUNT : le nombre maximum d’éléments retournés (MAXFEATURES si version 1.0.0, COUNT si version 2.0.0)
         - FILTER : le filtre personnalisé qui va permettre d’effectuer des sélection sur les éléments à récupérer.
 
-    La structure d'une URL WFS est la suivante : http://domaine.com:port/sigserver/wfs/?service=wfs&version=version&request=request
+    La structure d'une URL WFS est la suivante : http://host/path?name=value& où name=value& correspond à une liste de paramètres
 
 
--  **Web Map Service (WMS)** : Permet de mettre à disposition d’utilisateurs distants des images géoréférencées, via une simple requête HTTP, à partir de données sources raster (image) ou vecteur.
-- **Web Map Tile Service (WMTS)** : Permet d'obtenir des cartes géo-référencées tuilées à partir d'un serveur. Ce service est comparable au Web Map Service (WMS) mais tandis que le WMS permet de faire des requêtes nécessitant une certaine puissance de calcul côté serveur à chaque requête, le WMTS met l'accent sur la performance et ne permet de requêter que des images pré-calculées (tuiles)par le serveur.
-- **Tile Map Service (TMS)** : Le service TMS est comme le service WFS. Il Transmet des données géographiques vectorielles mais sous formes de tuiles vecteurs. Les tuiles sont des paquets de données géographiques prédécoupées en forme de dalles par le serveur, prêtes à être transférées lorsqu’une requête est émise. Ces tuiles sont produites par le serveur en fonction de l’échelle de visualisation. On appelle cela le principe de la pyramide.
+-  **Web Map Service (WMS)** : Permet de mettre à disposition d’utilisateurs distants des images géoréférencées, via une simple requête HTTP, à partir de données sources raster (image) ou vecteur. Le protocole WMS permet d'effectuer 3 principales requêtes :
+    - GetCapabilities : retourne les méta-données qui décrivent le contenu du service et les paramètres acceptés
+    - GetMap : renvoie une image de la carte ;
+    - GetFeatureInfo : renvoie des informations sur les objets ayant servi à générer la carte (optionnelle).
+
+    On retrouve plusieurs paramètres selon les requêtes :
+    - paramètres communs :
+        - VERSION : la version du service utilisée (1.0.0, 2.0.0, …)
+        - REQUEST : la requête adressée au serveur (GetCapabilities, GetFeature ou DescribreFeatureType)
+        - SERVICE : le type de service (ici "WMS")
+    - paramètres requête GetFeature :
+        - FORMAT : le format de sortie - type-mime - du fichier image (“image/png”, “image/jpg”, …) 
+        - LAYERS : la ou les ressources à utiliser pour calculer l’image. C’est le nom technique de la ressource qui est utilisé ;
+        - STYLES : le style de rendu des couches ;
+        - WIDTH : largeur de l’image finale en pixels ;
+        - HEIGHT : hauteur de l’image finale en pixels ;
+        - En WMS 1.0 WMS 1.1 et WMS 1.2, le paramètre SRS (Spatial Reference Système) et en WMS 1.3 le paramètre est renommé CRS. Ce paramètre indique le système de coordonnées utilisé ;
+        - BBOX (Bounding Box) : l’emprise géographique des données à rendre dans l’image.
+        - DPI : densité de l’image attendue en “dot per inch” ou “pixel par pouce” (par défaut : 90,7 DPI).
+        - OUTPUTFORMAT correspond au format de sortie de l'image (exemple : image/png).
+
+        La structure d'une URL WMS est la suivante : http://host/path?{name=value&} où name=value& correspond à une liste de paramètres
+
+- **Web Map Tile Service (WMTS)** : Permet d'obtenir des cartes géo-référencées tuilées à partir d'un serveur. Ce service est comparable au Web Map Service (WMS) mais tandis que le WMS permet de faire des requêtes nécessitant une certaine puissance de calcul côté serveur à chaque requête, le WMTS met l'accent sur la performance et ne permet de requêter que des images pré-calculées (tuiles) par le serveur. Le protocole WMS permet d'effectuer 3 principales requêtes :
+    - GetCapabilities : retourne les méta-données qui décrivent le contenu du service et les paramètres acceptés
+    - GetTile : renvoie une image précalculée de la pyramide
+    - GetFeatureInfo : renvoie des informations additionnelles sur un endroit d’une image retournée (optionnelle)
+
+     On retrouve plusieurs paramètres selon les requêtes :
+    - paramètres communs :
+        - VERSION : la version du service utilisée
+        - REQUEST : la requête adressée au serveur
+        - SERVICE : le type de service (ici "WMTS")
+    - paramètres requête GetFeature :
+        - FORMAT : le format de sortie du fichier image 
+        - LAYERS : le nom de la couche concernée
+        - TILEMATRIXSET : Le nom de la pyramide d’images
+        - TILEMATRIX : Le nom de la matrice qui contient la tuile
+        - TILEROW : Le numéro de ligne du coin supérieur gauche de la tuile
+        - TILECOL : Le numéro de colonne du coin supérieur gauche de la tuile
+
+
+- **Tile Map Service (TMS)** : Le service TMS est comme le service WFS. Il Transmet des données géographiques vectorielles mais sous formes de tuiles vecteurs. 
+
+
+### 1.3 Tuiles
+Les tuiles sont des paquets de données géographiques prédécoupées en forme de dalles par le serveur, prêtes à être transférées lorsqu’une requête est émise. Ces tuiles sont produites par le serveur en fonction de l’échelle de visualisation. On appelle cela le principe de la pyramide.
