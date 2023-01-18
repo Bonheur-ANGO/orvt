@@ -92,7 +92,7 @@ serveurs cartographiques afin de manipuler des objets géographiques vectoriels.
 
         La structure d'une URL WMS est la suivante : http://host/path?{name=value&} où name=value& correspond à une liste de paramètres
 
-- **Web Map Tile Service (WMTS)** : Permet d'obtenir des cartes géo-référencées tuilées à partir d'un serveur. Ce service est comparable au Web Map Service (WMS) mais tandis que le WMS permet de faire des requêtes nécessitant une certaine puissance de calcul côté serveur à chaque requête, le WMTS met l'accent sur la performance et ne permet de requêter que des images pré-calculées (tuiles) par le serveur. Le protocole WMS permet d'effectuer 3 principales requêtes :
+- **Web Map Tile Service (WMTS)** : Permet d'obtenir des cartes géo-référencées tuilées à partir d'un serveur. Ce service est comparable au Web Map Service (WMS) mais tandis que le WMS permet de faire des requêtes nécessitant une certaine puissance de calcul côté serveur à chaque requête, le WMTS met l'accent sur la performance et ne permet de requêter que des images pré-calculées (tuiles) par le serveur. Le protocole WMTS permet d'effectuer 3 principales requêtes :
     - GetCapabilities : retourne les méta-données qui décrivent le contenu du service et les paramètres acceptés
     - GetTile : renvoie une image précalculée de la pyramide
     - GetFeatureInfo : renvoie des informations additionnelles sur un endroit d’une image retournée (optionnelle)
@@ -110,9 +110,54 @@ serveurs cartographiques afin de manipuler des objets géographiques vectoriels.
         - TILEROW : Le numéro de ligne du coin supérieur gauche de la tuile
         - TILECOL : Le numéro de colonne du coin supérieur gauche de la tuile
 
+    La structure d'une URL WMTS est la suivante : http://host/path?{name=value&} où name=value& correspond à une liste de paramètres. 
 
-- **Tile Map Service (TMS)** : Le service TMS est comme le service WFS. Il Transmet des données géographiques vectorielles mais sous formes de tuiles vecteurs. 
+
+- **Tile Map Service (TMS)** : Le service TMS est comme le service WFS. Il Transmet des données géographiques vectorielles mais sous formes de tuiles vecteurs. Le protocole TMS permet d'effectuer 2 principales opérations :
+    - Accès aux capacités du service : renvoie les ressources disponibles, les styles prédéfinis
+    - Accès à une tuile : renvoie une tuile vectorielle pré-calculée
+
+
+![Tableau récapitulatif](tablea_comparaison_protocoles.PNG)
 
 
 ### 1.3 Tuiles
-Les tuiles sont des paquets de données géographiques prédécoupées en forme de dalles par le serveur, prêtes à être transférées lorsqu’une requête est émise. Ces tuiles sont produites par le serveur en fonction de l’échelle de visualisation. On appelle cela le principe de la pyramide.
+Les tuiles (rasters ou vecteurs) sont des paquets de données géographiques prédécoupées en forme de dalles par le serveur, prêtes à être transférées lorsqu’une requête est émise. Ces tuiles sont produites par le serveur en fonction de l’échelle de visualisation. On appelle cela le principe de la pyramide. À chaque niveau de zoom, des tuiles spécifiques sont fournis. Les tuiles présentent plusieurs avantages d'utilisation dont :
+- La rapidité d'acès à la donnée lors d'une requête car les tuiles sont prédécoupées à l'avance par le serveur et stocker dans le cache
+- La possibilité de personnalisation du style côté client (pour les tuiles vectorielles)
+
+
+![Tableau récapitulatif](vector_tiles_pyramid_structure.png)
+
+
+### 1.3 Architecture de la cartographie web
+La cartographie web se base sur une architecture client/serveur:
+- Client : Ici généralement représenté par un navigateur web, permet de visualiser les données géographiques transmises depuis le serveur
+- Serveur : Traite les données géographiques et les transmet
+
+Selon l'utilisation du service tuilage ou non, le processus de production de données géographiques du côté serveur se fait différemment
+
+- Architecture sans utilisation du service de tuilage : La communication s’effectue de la
+manière suivante (voir figure 7) :
+    - Le client envoie une requête pour l’affichage d’une carte web géographique
+    - Le serveur reçoit la requête
+    - Le serveur extrait les données nécessaires à la constitution de la carte web géographique à partir de la base de données
+    - Le serveur transmets les données géographiques
+    - La carte géographique web est constituée à partir des données géographiques reçues du serveur
+
+![Tableau récapitulatif](architecture_web_mapping_sans_tuilage.png)
+
+- Architecture avec utilisation du service de tuilage : La communication s’effectue de la
+manière suivante (voir figure 7) :
+    - Le client envoie une requête pour l’affichage d’une carte web géographique
+    - Le serveur reçoit la requête
+    - Le serveur extrait les données nécessaires à la constitution de la carte web 
+    géographique à partir de la base de données
+    - Le serveur sélectionne les tuiles si elles avaient déjà été chargée ou sinon les 
+    fabrique à la volée par rapport à l’échelle de visualisation et la zone concernée et les 
+    transmet au client
+    - Le serveur transmets les données géographiques permettant de fabriquer la carte web côté client
+    - La carte géographique web est constituée à partir des tuiles vecteurs reçues du 
+    serveur
+
+![Tableau récapitulatif](architecture_web_mapping_avec_tuilage.png)
