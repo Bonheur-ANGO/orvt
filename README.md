@@ -1,19 +1,45 @@
-ORVT
+# **ORVT : Outil de rasterisation pour les vecteurs tuilés**
+
+## **Table des matières**
+- **[1 - Système d'information géographique](#1---système-dinformation-géographique)**
+    -  **[1.1 - Acquisition des données géographiques](#11---acquisition-des-données-géographiques)**
+- **[2 - Données géographiques : vecteur et raster](#2---données-géographiques--vecteur-et-raster)**
+    - **[2.1 - Mode vecteur](#21---mode-vecteur)**
+        - **[2.1.1 - Généralités](#211---généralités)**
+        - **[2.1.2 - Table attribuaire](#212---table-attribuaire)**
+    - **[2.2 - Mode raster](#22---mode-raster)**
+        - **[2.2.1 - Généralités](#221---généralités)**
+    - **[2.3 - Le principe de couches](#23---le-principe-de-couches)**
+- **[3 - Tuiles](#3---tuiles)**
+- **[4 - Web Mapping](#4---web-mapping)**
+    - **[4.1 Architecture de la cartographie web](#41-architecture-de-la-cartographie-web)**
+- **[5. Tuiles vectorielles : symbologie](#5-tuiles-vectorielles--symbologie)**
+- **[6. Rasterisation](#6-rasterisation)**
+
+
+## **Glossaire**
+**OGC :** Open Géospatial Consortium
+
+**JSON :** Javascript Object Notation est un format d'échange léger de données
+
+**SIG :** Système d'information géographique
+
+**MapBox :** entreprise américaine spécialisée dans la cartographie en ligne
 
 # **Introduction**
 
 ## **1 - Système d'information géographique**
-Un système d'information géographique est un système d'information, composé de matériels, d'outils informatiques, de logiciels et de personnel qualifié, spécialement conçu pour recueillir, stocker, analyser, traiter, gérer et diffuser les données géographiques. On appelle donnée géographique une donnée contenant une référence à un lieu ou une position des entités à la surfaces de la terre. Elles sont utilisées dans plusieurs domaines notamment de la cadre de la recherche scientifique, dans le domaine des transport, de l'agriculture etc...
+Un système d'information géographique est un système d'information composé de matériels, d'outils informatiques, de logiciels et de personnel qualifié, spécialement conçu pour recueillir, stocker, analyser, traiter, gérer et diffuser les données géographiques. On appelle donnée géographique une donnée contenant une référence à un lieu ou une position des entités à la surface de la terre. Elles sont utilisées dans plusieurs domaines notamment de la cadre de la recherche scientifique, dans le domaine des transport, de l'agriculture etc...
 
 
 ### **1.1 - Acquisition des données géographiques**
 Les données géographiques sont obtenues de plusieurs façons. Les deux manières les plus utilisées sont l'imagerie aérienne et l'imagerie satellitaire.
-- **Imagerie aérienne** : Une photographie aérienne désigne une photographie prise depuis les airs. L'IGN avec sa flotte aérienne (4 avions), photographie l'ensemble du territoire avec des caméras numériques tous les 3 ans. Les avions se placent à une certaine altitude et s'y tiennent en prennant des images numériques verticales couvrant 1.5 km de longeur par 1.5 km de largeur au sol. Ces opérations se font itératicement afin de couvrir l'ensemble du térritoire national.
-- **Imagerie satellitaire** : Une image satellite désigne une prise de vue transmise par un satellite en orbite. Grâce à un personnel compétent en géométrie et en photogrammétrie, l'IGN a réussi à développer des chaînes de production oppérationnel de cartographie à parties d'images satellites.
+- **Imagerie aérienne** : Une photographie aérienne désigne une photographie prise depuis les airs. L'IGN avec sa flotte aérienne (4 avions), photographie l'ensemble du territoire avec des caméras numériques tous les 3 ans. Les avions se placent à une certaine altitude et s'y tiennent en prennant des images numériques verticales couvrant 1.5 km de longeur par 1.5 km de largeur au sol. Ces opérations se font itérativement afin de couvrir l'ensemble du térritoire national.
+- **Imagerie satellitaire** : Une image satellite désigne une prise de vue transmise par un satellite en orbite. Grâce à un personnel compétent en géométrie et en photogrammétrie, l'IGN a réussi à développer des chaînes de production opérationnel de cartographie à parties d'images satellites.
 
 
 ## **2 - Données géographiques : vecteur et raster**
-Il existe deux manières de représenter les données géographiques de manière numérique à savoir: le mode vecteur et le mode raster.
+Il existe deux manières de représenter les données géographiques de manière numérique à savoir : le mode vecteur et le mode raster.
 
 ### **2.1 - Mode vecteur**
 #### **2.1.1 - Généralités**
@@ -30,7 +56,7 @@ dans des bases de données avec leurs coordonnées spatiales et leurs données a
 
 ### **2.2 - Mode raster**
 #### **2.2.1 - Généralités**
-Les données géographiques en mode raster sont des images /*(plans scannés, photographie aériennes, images satellitaires, modèles numériques de terrain)*/ constitués de plusieurs pixels organisés sous forme de grilles en lignes et colonnes. Un pixel est l'unité de base de la définition d'une image numérique matricielle. A chaque pixel est associé une ou plusieurs valeurs numériques décrivant les caractéristiques de l'espace telles que la température, l'altitude ou la végétation. 
+Les données géographiques en mode raster sont des images constitués de plusieurs pixels organisés sous forme de grilles en lignes et colonnes. Un pixel est l'unité de base de la définition d'une image numérique matricielle. A chaque pixel est associé une ou plusieurs valeurs numériques décrivant les caractéristiques de l'espace telles que la température, l'altitude ou la végétation. 
 
 ![raster](raster_pix.jpg)
 
@@ -43,7 +69,7 @@ de couches qui consiste à disposer différentes couches d’objets les unes sur
 
 ## **3 - Tuiles**
 Les tuiles (rasters ou vecteurs) sont des paquets de données géographiques prédécoupées en forme de dalles par le serveur, prêtes à être transférées lorsqu’une requête est émise. Ces tuiles sont produites par le serveur en fonction de l’échelle de visualisation. On appelle cela le principe de la pyramide. À chaque niveau de zoom, des tuiles spécifiques sont fournis. Les tuiles présentent plusieurs avantages d'utilisation dont :
-- La rapidité d'acès à la donnée lors d'une requête car les tuiles sont prédécoupées à l'avance par le serveur et stocker dans le cache
+- La rapidité d'acès à la donnée lors d'une requête car les tuiles sont prédécoupées à l'avance par le serveur ou fabriqué à la volée et stocker dans le cache
 - La possibilité de personnalisation du style côté client (pour les tuiles vectorielles)
 
 
@@ -51,7 +77,7 @@ Les tuiles (rasters ou vecteurs) sont des paquets de données géographiques pr�
 
 
 ## **4 - Web Mapping**
-Une carte géographique est une représentation graphique d'un espace géographique. Avec l'évolution des technologies et d'internet, le besoin d'affichage de carte géographique sur tous types d'écrans devient de plus en plus demandé par les utilisateurs et cela est possible grâce au Web mapping. Le web mapping ou cartographie web est la forme de cartographie qui fait usage d’internet afin de concevoir, traiter, produire et publier des cartes géographiques. Ces communications sont possibles grâce à un ensemble de règles appelées protocole. L’Open Géospatial Consortium (OGC) est une organisation internationale qui implémente des standards pour les services et le contenu géospatial, le traitement de données géographiques et les formats d’échange.
+Une carte géographique est une représentation graphique d'un espace géographique. Avec l'évolution des technologies et d'internet, le besoin d'affichage de cartes géographiques sur tous types d'écrans devient de plus en plus demandé par les utilisateurs et cela est possible grâce au Web mapping. Le web mapping ou cartographie web est la forme de cartographie qui fait usage d’internet afin de concevoir, traiter, produire et publier des cartes géographiques. Ces communications sont possibles grâce à un ensemble de règles appelées protocole. L’OGC est une organisation internationale qui implémente des standards pour les services et le contenu géospatial, le traitement de données géographiques et les formats d’échange.
 Parmi les spécifications, les plus couramment utilisés à l'IGN sont :
 
 - **Web Feature Service (WFS)** : Permet au moyen d’une URL formatée, d’interroger des 
@@ -163,7 +189,7 @@ manière suivante (voir figure 7) :
 ![architecture web mapping avec tuilage](architecture_web_mapping_avec_tuilage.png)
 
 ## **5. Tuiles vectorielles : symbologie**
-Comme dans notre étude nous nous intéréssons principalement aux tuiles vectorielles, il est plus que nécessaire de parler de symbologie. La symbolologie est l'ensemble d'éléments (palette de couleurs, polices d'écriture, icônes...), utilisé afin de donner une apparence visuelle à la carte et ainsi mettre en valeur les informations en fonction de leur importance. L'un des avantages comme on le disait plus haut des tuiles vectorielles est qu'elles offrent la possibilité à un utilisateur de créer sa propre symbologie côté client à travers la création d'un fichier de style. Le fichier de style va permettre de représenter chaque entité comme le souhaite l'utilisateur à travers des règles de styles bien définis. Le fichier de style doît être au format JSON (voir ci-dessous) et les spécifications de styles ont été définis par [MapBox](https://docs.mapbox.com/mapbox-gl-js/style-spec/) qui est une entreprise spécialisée dans la cartographie en ligne.
+Comme dans notre étude nous nous intéréssons principalement aux tuiles vectorielles, il est plus que nécessaire de parler de symbologie. La symbolologie est l'ensemble d'éléments (palette de couleurs, polices d'écriture, icônes...), utilisé afin de donner une apparence visuelle à la carte et ainsi mettre en valeur les informations en fonction de leur importance. L'un des avantages comme on le disait plus haut des tuiles vectorielles est qu'elles offrent la possibilité à un utilisateur de créer sa propre symbologie côté client à travers la création d'un fichier de style. Le fichier de style va permettre de représenter chaque entité comme le souhaite l'utilisateur à travers des règles de styles bien définis. Le fichier de style doît être au format JSON (voir ci-dessous) et les spécifications de styles ont été définis par [MapBox](https://docs.mapbox.com/mapbox-gl-js/style-spec/).
 
 ![Explication du fichier de style](explication_fichier_de_style.png)
 
@@ -174,13 +200,17 @@ Comme dans notre étude nous nous intéréssons principalement aux tuiles vector
 ![Illustration application du fichier de style](illustration_application_fichier_de_style.png)
 
 ## **6. Rasterisation**
+De manière globale, la rasterisation est un procédé qui consiste à convertir une image vectorielle en une image matricielle destinée à être affichée sur un écran ou imprimée par un matériel d'impression. Dans le cadre des SIG, la rastérisation est le passage du mode vecteur au mode raster : c'est la conversion de vecteurs (point, polygone, ligne) en une grille matricielle de pixels où chaque pixel comprend une valeur.
+
+![rasterisation](rasterisation.png)
 
 # **Sources**
-https://geoservices.ign.fr/documentation/services/api-et-services-ogc/images-tuilees-wmts-ogc
-https://docs.qgis.org/2.8/fr/docs/gentle_gis_introduction/vector_data.html
-https://www.sigterritoires.fr/index.php/geoserver-avance-le-tuilage-principes/
-https://docs.mapbox.com/data/tilesets/guides/vector-tiles-introduction/
-https://geoservices.ign.fr/documentation/services/api-et-services-ogc/tuiles-vectorielles-tmswmts
-https://docs.qgis.org/2.8/fr/docs/training_manual/basic_map/symbology.html
-https://docs.mapbox.com/mapbox-gl-js/style-spec/
-https://docs.qgis.org/3.16/fr/docs/user_manual/working_with_vector_tiles/vector_tiles_properties.html
+* https://geoservices.ign.fr/documentation/services/api-et-services-ogc/images-tuilees-wmts-ogc
+* https://docs.qgis.org/2.8/fr/docs/gentle_gis_introduction/vector_data.html
+* https://www.sigterritoires.fr/index.php/geoserver-avance-le-tuilage-principes/
+* https://docs.mapbox.com/data/tilesets/guides/vector-tiles-introduction/
+* https://geoservices.ign.fr/documentation/services/api-et-services-ogc/tuiles-vectorielles-tmswmts
+* https://docs.qgis.org/2.8/fr/docs/training_manual/basic_map/symbology.html
+* https://docs.mapbox.com/mapbox-gl-js/style-spec/
+* https://docs.qgis.org/3.16/fr/docs/user_manual/working_with_vector_tiles/vector_tiles_properties.html
+* https://fr.wikipedia.org/wiki/Rast%C3%A9risation
