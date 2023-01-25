@@ -26,49 +26,61 @@
 
 **MapBox :** entreprise américaine spécialisée dans la cartographie en ligne
 
-# **Introduction**
+**API :** Application Programming Interface
 
-## **1 - Système d'information géographique**
+**Javascript :** Langage de programmation principalement utilisé dans le cadre du développement de pages web intéractives.
+
+**OpenLayers :** Librairie javascript permettant de créer des cartes géographiques web
+
+**Librairie informatique :** c'est un ensemble de classes et de fonctions déjà pré-codées par des développeurs et  accessible publiquement généralement dans une dépôt, utilisable dans le développement des applications selon le besoin.
+
+**PDF :** Portable Document Format est un format de document très utilisée sur différents appareils informatiques(tablettes, ordinateurs, téléphones portables)
+
+**NPM :** Node Package Manager est un gestionnaire de librairies javascript
+
+# **I - Introduction**
+
+## **I.1 - Système d'information géographique**
 Un système d'information géographique est un système d'information composé de matériels, d'outils informatiques, de logiciels et de personnel qualifié, spécialement conçu pour recueillir, stocker, analyser, traiter, gérer et diffuser les données géographiques. On appelle donnée géographique une donnée contenant une référence à un lieu ou une position des entités à la surface de la terre. Elles sont utilisées dans plusieurs domaines notamment de la cadre de la recherche scientifique, dans le domaine des transport, de l'agriculture etc...
 
 
-### **1.1 - Acquisition des données géographiques**
+### **I.1.1 - Acquisition des données géographiques**
 Les données géographiques sont obtenues de plusieurs façons. Les deux manières les plus utilisées sont l'imagerie aérienne et l'imagerie satellitaire.
 - **Imagerie aérienne** : Une photographie aérienne désigne une photographie prise depuis les airs. L'IGN avec sa flotte aérienne (4 avions), photographie l'ensemble du territoire avec des caméras numériques tous les 3 ans. Les avions se placent à une certaine altitude et s'y tiennent en prennant des images numériques verticales couvrant 1.5 km de longeur par 1.5 km de largeur au sol. Ces opérations se font itérativement afin de couvrir l'ensemble du térritoire national.
 - **Imagerie satellitaire** : Une image satellite désigne une prise de vue transmise par un satellite en orbite. Grâce à un personnel compétent en géométrie et en photogrammétrie, l'IGN a réussi à développer des chaînes de production opérationnel de cartographie à parties d'images satellites.
 
 
-## **2 - Données géographiques : vecteur et raster**
+## **I.2 - Données géographiques : vecteur et raster**
 Il existe deux manières de représenter les données géographiques de manière numérique à savoir : le mode vecteur et le mode raster.
 
-### **2.1 - Mode vecteur**
-#### **2.1.1 - Généralités**
+### **I.2.1 - Mode vecteur**
+#### **I.2.1.1 - Généralités**
 Les données géographiques en mode vecteur permettent de modéliser le monde réel à travers des objets. Un objet est caractérisé par deux éléments : les informations qui lui sont associées ou données attributaires et sa forme ou sa géométrie. La géométrie est constituée d’un ou plusieurs points interconnectés. Un point est une position dans l’espace. Il existe trois principaux types de géométrie : point, ligne et polygone. Si un objet dispose d’un seul point, alors sa forme est un point. Si un objet dispose de plusieurs points qui ne forment pas de forme géométrique fermée, alors sa forme est une ligne. Si un objet dispose de plusieurs points interconnectés formant une forme géométrique close, alors sa forme est un polygone.
 
 ![Les différentes formes de vecteurs](schema_vecteur_formes.png)
 
-#### **2.1.2 - Table attribuaire**
+#### **I.2.1.2 - Table attribuaire**
 Les objets peuvent être par exemple des maisons, des routes ou arbres. Ils sont stockés 
 dans des bases de données avec leurs coordonnées spatiales et leurs données attributaires ou métadonnées. Les données ou tables attributaires permettent de décrire les propriétés de l'entité. Les objets sont regroupés par thème dans les tables. Par exemple on regroupe toutes les entités représentant des batiments dans une même table. Une table est composé de lignes et de colonnes. Chaque colonne représente une caractéristique de l'entité comme la surface, la hauteur ou la date de construction d'un bâtiment. Chaque ligne représente une entité.
 
 ![table attributaire](table_attributaire.png)
 
 
-### **2.2 - Mode raster**
-#### **2.2.1 - Généralités**
+### **I.2.2 - Mode raster**
+#### **I.2.2.1 - Généralités**
 Les données géographiques en mode raster sont des images constitués de plusieurs pixels organisés sous forme de grilles en lignes et colonnes. Un pixel est l'unité de base de la définition d'une image numérique matricielle. A chaque pixel est associé une ou plusieurs valeurs numériques décrivant les caractéristiques de l'espace telles que la température, l'altitude ou la végétation. 
 
 ![raster](raster_pix.jpg)
 
 
-### **2.3 - Le principe de couches**
+### **I.2.3 - Le principe de couches**
 Si l’on souhaite représenter différents types d’objets on utilise le principe de superposition 
 de couches qui consiste à disposer différentes couches d’objets les unes sur les autres afin de constituer une carte. Chaque couche regroupes les données appartenant à une même thématique ou classe d'objets (immeubles, routes etc...)
 
 ![superposition des couches](superposition_des_couches.jpg)
 
-## **3 - Tuiles**
-Les tuiles (rasters ou vecteurs) sont des paquets de données géographiques prédécoupées en forme de dalles par le serveur, prêtes à être transférées lorsqu’une requête est émise. Ces tuiles sont produites par le serveur en fonction de l’échelle de visualisation. On appelle cela le principe de la pyramide. À chaque niveau de zoom, des tuiles spécifiques sont fournis. Les tuiles présentent plusieurs avantages d'utilisation dont :
+## **I.3 - Tuiles**
+Les tuiles (rasters ou vecteurs) sont des paquets de données géographiques prédécoupées en forme de dalles par le serveur, prêtes à être transférées lorsqu’une requête est émise. Elles peuvent avoir différentes tailles : 64x64, 256x256, 512x512 pixels. Les services web utilisent le plus souvent des tailles de 256x256. Ces tuiles sont produites par le serveur en fonction de l’échelle de visualisation. On appelle cela le principe de la pyramide. À chaque niveau de zoom, des tuiles spécifiques sont fournis. Les tuiles présentent plusieurs avantages d'utilisation dont :
 - La rapidité d'acès à la donnée lors d'une requête car les tuiles sont prédécoupées à l'avance par le serveur ou fabriqué à la volée et stocker dans le cache
 - La possibilité de personnalisation du style côté client (pour les tuiles vectorielles)
 
@@ -76,7 +88,7 @@ Les tuiles (rasters ou vecteurs) sont des paquets de données géographiques pr�
 ![Tableau récapitulatif](vector_tiles_pyramid_structure.png)
 
 
-## **4 - Web Mapping**
+## **I.4 - Web Mapping**
 Une carte géographique est une représentation graphique d'un espace géographique. Avec l'évolution des technologies et d'internet, le besoin d'affichage de cartes géographiques sur tous types d'écrans devient de plus en plus demandé par les utilisateurs et cela est possible grâce au Web mapping. Le web mapping ou cartographie web est la forme de cartographie qui fait usage d’internet afin de concevoir, traiter, produire et publier des cartes géographiques. Ces communications sont possibles grâce à un ensemble de règles appelées protocole. L’OGC est une organisation internationale qui implémente des standards pour les services et le contenu géospatial, le traitement de données géographiques et les formats d’échange.
 Parmi les spécifications, les plus couramment utilisés à l'IGN sont :
 
@@ -156,7 +168,7 @@ serveurs cartographiques afin de manipuler des objets géographiques vectoriels.
 ![Protocoles](tablea_comparaison_protocoles.PNG)
 
 
-### **4.1 Architecture de la cartographie web**
+### **I.4.1 - Architecture de la cartographie web**
 La cartographie web se base sur une architecture client/serveur:
 - Client : Ici généralement représenté par un navigateur web, permet de visualiser les données géographiques transmises depuis le serveur
 - Serveur : Traite les données géographiques et les transmet
@@ -188,8 +200,10 @@ manière suivante (voir figure 7) :
 
 ![architecture web mapping avec tuilage](architecture_web_mapping_avec_tuilage.png)
 
-## **5. Tuiles vectorielles : symbologie**
-Comme dans notre étude nous nous intéréssons principalement aux tuiles vectorielles, il est plus que nécessaire de parler de symbologie. La symbolologie est l'ensemble d'éléments (palette de couleurs, polices d'écriture, icônes...), utilisé afin de donner une apparence visuelle à la carte et ainsi mettre en valeur les informations en fonction de leur importance. L'un des avantages comme on le disait plus haut des tuiles vectorielles est qu'elles offrent la possibilité à un utilisateur de créer sa propre symbologie côté client à travers la création d'un fichier de style. Le fichier de style va permettre de représenter chaque entité comme le souhaite l'utilisateur à travers des règles de styles bien définis. Le fichier de style doît être au format JSON (voir ci-dessous) et les spécifications de styles ont été définis par [MapBox](https://docs.mapbox.com/mapbox-gl-js/style-spec/).
+## **I.5 - Tuiles vectorielles : symbologie**
+Comme dans notre étude nous nous intéréssons principalement aux tuiles vectorielles, il est plus que nécessaire de parler de symbologie. La symbolologie est l'ensemble d'éléments (palette de couleurs, polices d'écriture, icônes...), utilisé afin de donner une apparence visuelle à la carte et ainsi mettre en valeur les informations en fonction de leur importance. L'un des avantages comme on le disait plus haut des tuiles vectorielles est qu'elles offrent la possibilité à un utilisateur de créer sa propre symbologie côté client à travers la création d'un fichier de style. Le fichier de style va permettre de représenter chaque entité comme le souhaite l'utilisateur à travers des règles de styles bien définis. Plusieurs normes permettent de créer une symbologie côté client à savoir :
+- [MapBox GL JS](https://docs.mapbox.com/mapbox-gl-js/style-spec/) : document de style au format JSON créé par MapBox.
+- [Carto CSS](https://cartocss.readthedocs.io/en/latest/) : syntaxe similaire au CSS, permettant de créer un style pour des données géographiques.
 
 ![Explication du fichier de style](explication_fichier_de_style.png)
 
@@ -199,11 +213,58 @@ Comme dans notre étude nous nous intéréssons principalement aux tuiles vector
 
 ![Illustration application du fichier de style](illustration_application_fichier_de_style.png)
 
-## **6. Rasterisation**
-De manière globale, la rasterisation est un procédé qui consiste à convertir une image vectorielle en une image matricielle destinée à être affichée sur un écran ou imprimée par un matériel d'impression. Dans le cadre des SIG, la rastérisation est le passage du mode vecteur au mode raster : c'est la conversion de vecteurs (point, polygone, ligne) en une grille matricielle de pixels où chaque pixel comprend une valeur.
+## **I.6 - Rasterisation**
+De manière globale, la rasterisation est un procédé qui consiste à convertir une image vectorielle en une image matricielle destinée à être affichée sur un écran ou imprimée par un matériel d'impression. Dans le cadre des SIG, la rastérisation est le passage du mode vecteur au mode raster : c'est la conversion de vecteurs (point, polygone, ligne) en une grille matricielle de pixels où chaque pixel comprend une valeur. Une chose devient donc essentielle lors de la rasterisation, c'est la résolution de l'image obtenue. La résolution de l'image fait en sorte d'obtenir une image nettement clair en ayant le plus de pixel. Plus il y aura de pixel plus les informations sur la carte seront facilement distinguable.
 
 ![rasterisation](rasterisation.png)
 
+&nbsp;
+# **II - Etat de l'art des solutions techniques permettant d'effectuer une rasterisation de flux de vecteurs tuilés à l'IGN**
+## **II.1 - Objectif**
+Avec l'utilisation de plus en plus fréquente des cartes sur le web et sur des applications mobiles, le besoin parfois d'obtenir une image de cette carte ou de l'imprimer peut vraiment être problématique. Actuellement il n'existe pas de solutions techniques à l'IGN permettant de répondre à ce besoin. L'objectif pour nous donc sera d'effectuer des propositions de différentes solutions techniques permettant de faire une rasterisation de flux de vecteurs tuilés à travers cet état de l'art.
+
+## **II.2 - Solutions techniques**
+### **II.2.1 - Librairie Javascript : ol-map-screenshot**
+ol-map-screenshot est une librairie javascript disponible sur npm, que l'on peut utiliser pour obtenir une image (capture d'écran) d'une carte web au format PNG, JPEG. vous trouverez une demo de l'utilisation la librairie [ici](https://jmmluna.github.io/ol-map-screenshot/demo/)
+
+- **Caractéristique de la librairie :**
+    - Image de la carte customisables à travers des options
+    - Prise en charge des formats JPEG, PNG
+    - Métadonnées de capture d'écran dans le résultat
+    - Rendu de la barre d'échelle
+
+- **Options de rendu de l'image :**
+    - dimension : Taille de l'image souhaitée en milimètres (longueur et largeur)
+    - L'échelle de la carte
+    - Longueur de la barre d'échelle de la carte
+    - Format d'exportation de l'image
+    - Résolution d'écran
+
+![demo ol-map-screenshot](demo-ol-map-screenshot.png)
+
+
+#### **II.2.1.1 - Tests**
+Nous avons pu testé l'outil avec différentes résolutions afin de vérifier que celle-ci fournis une image de très bonne qualité.
+- **Test - 1 :** Rendu de l'image avec une résolution de 300ppp
+![Test de rendu d'image avec une résolution de 300](ol-map-screenshot-300.png)
+
+- **Test - 1 :** Rendu de l'image avec une résolution de 800ppp
+![Test de rendu d'image avec une résolution de 800](ol-map-screenshot-800.png)
+
+#### **II.2.1.2 - Conclusion**
+- **Avantages :**
+    - Intégration facile et intuitive dans le code
+    - Options de customisation
+    - Le rendu est très satisfaisant lorsque l'on applique une haute réslution
+- **Désavantages :**
+    - Faible utilisation de la librairie (source : github)
+
+### **II.2.1 - Librairie Javascript : ol-map-screenshot**
+ol-map-screenshot est une librairie javascript que l'on peut utiliser pour obtenir une image (capture d'écran) d'une carte web au format PNG, JPEG ou PDF.
+
+
+
+&nbsp;
 # **Sources**
 * https://geoservices.ign.fr/documentation/services/api-et-services-ogc/images-tuilees-wmts-ogc
 * https://docs.qgis.org/2.8/fr/docs/gentle_gis_introduction/vector_data.html
@@ -214,3 +275,4 @@ De manière globale, la rasterisation est un procédé qui consiste à convertir
 * https://docs.mapbox.com/mapbox-gl-js/style-spec/
 * https://docs.qgis.org/3.16/fr/docs/user_manual/working_with_vector_tiles/vector_tiles_properties.html
 * https://fr.wikipedia.org/wiki/Rast%C3%A9risation
+* https://github.com/jmmluna/ol-map-screenshot
