@@ -1,21 +1,23 @@
 # **ORVT : Outil de rasterisation pour les vecteurs tuilés**
 
 ## **Table des matières**
-- **[1 - Système d'information géographique](#1---système-dinformation-géographique)**
-    -  **[1.1 - Acquisition des données géographiques](#11---acquisition-des-données-géographiques)**
-- **[2 - Données géographiques : vecteur et raster](#2---données-géographiques--vecteur-et-raster)**
-    - **[2.1 - Mode vecteur](#21---mode-vecteur)**
-        - **[2.1.1 - Généralités](#211---généralités)**
-        - **[2.1.2 - Table attribuaire](#212---table-attribuaire)**
-    - **[2.2 - Mode raster](#22---mode-raster)**
-        - **[2.2.1 - Généralités](#221---généralités)**
-    - **[2.3 - Le principe de couches](#23---le-principe-de-couches)**
-- **[3 - Tuiles](#3---tuiles)**
-- **[4 - Web Mapping](#4---web-mapping)**
-    - **[4.1 Architecture de la cartographie web](#41-architecture-de-la-cartographie-web)**
-- **[5. Tuiles vectorielles : symbologie](#5-tuiles-vectorielles--symbologie)**
-- **[6. Rasterisation](#6-rasterisation)**
-
+- **[I - Introduction](#i---introduction)**
+- **[I.1 - Système d'information géographique](#i1---système-dinformation-géographique)**
+    -  **[1.1.1 - Acquisition des données géographiques](#i11---acquisition-des-données-géographiques)**
+- **[I.2 - Données géographiques : vecteur et raster](#i2---données-géographiques--vecteur-et-raster)**
+    - **[I.2.1 - Mode vecteur](#i21---mode-vecteur)**
+        - **[I.2.1.1 - Généralités](#i211---généralités)**
+        - **[I.2.1.2 - Table attribuaire](#i212---table-attribuaire)**
+    - **[2.2 - Mode raster](#i22---mode-raster)**
+        - **[I.2.2.1 - Généralités](#i221---généralités)**
+    - **[I.2.3 - Le principe de couches](#i23---le-principe-de-couches)**
+- **[I.3 - Tuiles](#i3---tuiles)**
+- **[I.4 - Web Mapping](#i4---web-mapping)**
+    - **[I.4.1 Architecture de la cartographie web](#i41---architecture-de-la-cartographie-web)**
+- **[I.5. Tuiles vectorielles : symbologie](#i5---tuiles-vectorielles--symbologie)**
+- **[I.6. Rasterisation](#i6---rasterisation)**
+- **[II - Etat de l'art des solutions techniques permettant d'effectuer une rasterisation de flux de vecteurs tuilés à l'IGN](#ii---etat-de-lart-des-solutions-techniques-permettant-deffectuer-une-rasterisation-de-flux-de-vecteurs-tuilés-à-lign)**
+**[II.1 - Objectif](#ii1---objectif)**
 
 ## **Glossaire**
 **OGC :** Open Géospatial Consortium
@@ -221,11 +223,11 @@ De manière globale, la rasterisation est un procédé qui consiste à convertir
 &nbsp;
 # **II - Etat de l'art des solutions techniques permettant d'effectuer une rasterisation de flux de vecteurs tuilés à l'IGN**
 ## **II.1 - Objectif**
-Avec l'utilisation de plus en plus fréquente des cartes sur le web et sur des applications mobiles, le besoin parfois d'obtenir une image de cette carte ou de l'imprimer peut vraiment être problématique. Actuellement il n'existe pas de solutions techniques à l'IGN permettant de répondre à ce besoin. L'objectif pour nous donc sera d'effectuer des propositions de différentes solutions techniques permettant de faire une rasterisation de flux de vecteurs tuilés à travers cet état de l'art.
+Avec l'utilisation de plus en plus fréquente des cartes sur le web et sur des applications mobiles, le besoin parfois d'obtenir une image de cette carte ou de l'imprimer peut vraiment être problématique du fait de la qualité de rendu de l'image qui peut être parfois très floue. Actuellement il n'existe pas de solutions techniques à l'IGN permettant de répondre à ce besoin. L'objectif pour nous donc sera d'effectuer des propositions de différentes solutions techniques permettant de faire une rasterisation de flux de vecteurs tuilés à travers cet état de l'art.
 
 ## **II.2 - Solutions techniques**
 ### **II.2.1 - Librairie Javascript : ol-map-screenshot**
-ol-map-screenshot est une librairie javascript disponible sur npm, que l'on peut utiliser pour obtenir une image (capture d'écran) d'une carte web au format PNG, JPEG. vous trouverez une demo de l'utilisation la librairie [ici](https://jmmluna.github.io/ol-map-screenshot/demo/)
+ol-map-screenshot est une librairie javascript disponible sur npm, que l'on peut utiliser pour obtenir une image (capture d'écran) d'une carte web au format PNG, JPEG. Vous trouverez une demo de l'utilisation la librairie [ici](https://jmmluna.github.io/ol-map-screenshot/demo/)
 
 - **Caractéristique de la librairie :**
     - Image de la carte customisables à travers des options
@@ -240,27 +242,30 @@ ol-map-screenshot est une librairie javascript disponible sur npm, que l'on peut
     - Format d'exportation de l'image
     - Résolution d'écran
 
-![demo ol-map-screenshot](demo-ol-map-screenshot.png)
-
-
 #### **II.2.1.1 - Tests**
 Nous avons pu testé l'outil avec différentes résolutions afin de vérifier que celle-ci fournis une image de très bonne qualité.
-- **Test - 1 :** Rendu de l'image avec une résolution de 300ppp
-![Test de rendu d'image avec une résolution de 300](ol-map-screenshot-300.png)
+- **Test - 1 :** Rendu de l'image avec comme paramètres :
+    - Résolution : 72ppp
+    - dimensions : 400x240 "mm"
+![Test de rendu d'image avec une résolution de 72](ol-map-screenshot-72.png)
 
-- **Test - 2 :** Rendu de l'image avec une résolution de 800ppp
-![Test de rendu d'image avec une résolution de 800](ol-map-screenshot-800.png)
+- **Test - 2 :** Rendu de l'image avec comme paramètres :
+    - Résolution : 300ppp
+    - dimensions : 400x240 "mm"
+![Test de rendu d'image avec une résolution de 300](ol-map-screenshot-300.png)
 
 #### **II.2.1.2 - Conclusion**
 - **Avantages :**
     - Intégration facile et intuitive dans le code
+    - Basée sur OpenLayers
     - Options de customisation
     - Le rendu est très satisfaisant
+    - Génération du rendu rapide pour les très haute résolution
 - **Désavantages :**
     - Faible utilisation de la librairie (source : github)
 
 ### **II.2.1 - L'outil : Print Maps**
-Print Maps est une application web conçu par un développeur nommé Matthew Petroff. Il a constaté qu'il était très difficile de pouvoir imprimer une carte géographique du fait de la faible résolution de celle. Il a donc conçu cet outil permettant d'obtenir des images de cartes géographiques avec une haute résolution au format PNG ou PDF.
+Print Maps est une application web conçu par un développeur nommé Matthew Petroff. Il a constaté qu'il était très difficile de pouvoir imprimer une carte géographique du fait de la faible résolution de celle. Il a donc conçu cet outil permettant d'obtenir des images de cartes géographiques avec une haute résolution au format PNG ou PDF. Contrairement aux autres outils, cet outil utilise les source de données provenant de Mapbox.
 
 - **Caractéristique de la librairie :**
     - Image de la carte customisables à travers des options
@@ -276,21 +281,65 @@ Print Maps est une application web conçu par un développeur nommé Matthew Pet
 
 #### **II.2.1.1 - Tests**
 Nous avons testé l'outil avec différentes résolutions afin de vérifier que celle-ci fournis une image de très bonne qualité.
-- **Test - 1 :** Rendu de l'image avec une résolution de 72ppp
+- **Test - 1 :** Rendu de l'image avec comme paramètres :
+    - Résolution : 72ppp
+    - dimensions : 400x240 "mm"
 ![Test de rendu d'image avec une résolution de 72](print-map-72.png)
 
-- **Test - 2 :** Rendu de l'image avec une résolution de 300ppp
+- **Test - 2 :** Rendu de l'image avec comme paramètres :
+    - Résolution : 300ppp
+    - dimensions : 400x240 "mm"
 ![Test de rendu d'image avec une résolution de 300](print-map-300.png)
 
 #### **II.2.1.2 - Conclusion**
 - **Avantages :**
     - Populaire auprès des développeurs (source : github)
     - Options de customisation
-    - Le rendu est très satisfaisant
+    - Le rendu est très satisfaisant et de très très haute qualité
     - Libre de droit
+    - Génération du rendu rapide pour les très haute résolution
 - **Désavantages :**
     - N'est pas implémentée avec OpenLayers mais plutôt avec MapBox
     - N'a pas d'API et nécessite donc de copier le code et de le modifier
+
+
+### **II.2.1 - La librairie : Ink Map**
+Ink Map est une librairie javascript basée sur open Layers capable de produire des images de carte. InkMap a été développé par camptocamp une entreprise basée en France, et a été entièrement financée par le ministère français de l'écologie. Elle a été développée afin d'obtenir des cartes de haute résolution imprimable à partir du navigateur.
+
+- **Caractéristique de la librairie :**
+    - Image de la carte customisables à travers des options
+    - Prise en charge du format PNG
+
+- **Options de rendu de l'image :**
+    - Tableau de couche d'objets
+    - dimension : Taille de l'image souhaitée en milimètres ou en inch (longueur et largeur)
+    - Résolution d'écran
+    - Longitude et latitude du centre de la carte
+    - Vue de la barre d'échelle
+    - projection
+
+#### **II.2.1.1 - Tests**
+Nous avons testé l'outil avec différentes résolutions afin de vérifier que celle-ci fournis une image de très bonne qualité.
+- **Test - 1 :** Rendu de l'image avec comme paramètres :
+    - Résolution : 72ppp
+    - dimensions : 400x240 "mm"
+![Test de rendu d'image avec une résolution de 72](inkmap-test-72.png)
+
+- **Test - 2 :** Rendu de l'image avec comme paramètres :
+    - Résolution : 255ppp
+    - dimensions : 400x240 "mm"
+![Test de rendu d'image avec une résolution de 250](inkmap-test-250.png)
+
+#### **II.2.1.2 - Conclusion**
+- **Avantages :**
+    - Intégration facile et intuitive dans le code
+    - Populaire auprès des développeurs (source : github)
+    - Options de customisation
+    - Le rendu est satisfaisant
+    - Validé par le ministère français de l'écologie
+    - Basée sur OpenLayers
+- **Désavantages :**
+    - Génération du rendu lente pour les très haute résolution
 
 
 &nbsp;
@@ -305,3 +354,4 @@ Nous avons testé l'outil avec différentes résolutions afin de vérifier que c
 * https://docs.qgis.org/3.16/fr/docs/user_manual/working_with_vector_tiles/vector_tiles_properties.html
 * https://fr.wikipedia.org/wiki/Rast%C3%A9risation
 * https://github.com/jmmluna/ol-map-screenshot
+* https://www.camptocamp.com/fr/actualites-evenements/inkmap
