@@ -260,7 +260,7 @@ Nous avons pu testé l'outil avec différentes résolutions afin de vérifier qu
     - Basée sur OpenLayers
     - Options de customisation
     - Le rendu est très satisfaisant
-    - Génération du rendu rapide pour les très haute résolution
+    - Génération du rendu rapide pour les très hautes résolutions
 - **Désavantages :**
     - Faible utilisation de la librairie (source : github)
 
@@ -295,9 +295,9 @@ Nous avons testé l'outil avec différentes résolutions afin de vérifier que c
 - **Avantages :**
     - Populaire auprès des développeurs (source : github)
     - Options de customisation
-    - Le rendu est très satisfaisant et de très très haute qualité
+    - Le rendu est très satisfaisant et de haute qualité
     - Libre de droit
-    - Génération du rendu rapide pour les très haute résolution
+    - Génération du rendu rapide pour les hautes résolutions
 - **Désavantages :**
     - N'est pas implémentée avec OpenLayers mais plutôt avec MapBox
     - N'a pas d'API et nécessite donc de copier le code et de le modifier
@@ -339,7 +339,45 @@ Nous avons testé l'outil avec différentes résolutions afin de vérifier que c
     - Validé par le ministère français de l'écologie
     - Basée sur OpenLayers
 - **Désavantages :**
-    - Génération du rendu lente pour les très haute résolution
+    - Génération du rendu lente pour les très hautes résolutions
+
+### **II.2.1 - La librairie : print-to-scale**
+Ink Map est une librairie javascript basée sur open Layers capable de produire des images de carte. InkMap a été développé par camptocamp une entreprise basée en France, et a été entièrement financée par le ministère français de l'écologie. Elle a été développée afin d'obtenir des cartes de haute résolution imprimable à partir du navigateur.
+
+- **Caractéristique de la librairie :**
+    - Image de la carte customisables à travers des options
+    - Prise en charge du format PNG
+
+- **Options de rendu de l'image :**
+    - Tableau de couche d'objets
+    - dimension : Taille de l'image souhaitée en milimètres ou en inch (longueur et largeur)
+    - Résolution d'écran
+    - Longitude et latitude du centre de la carte
+    - Vue de la barre d'échelle
+    - projection
+
+#### **II.2.1.1 - Tests**
+Nous avons testé l'outil avec différentes résolutions afin de vérifier que celle-ci fournis une image de très bonne qualité.
+- **Test - 1 :** Rendu de l'image avec comme paramètres :
+    - Résolution : 72ppp
+    - dimensions : 400x240 "mm"\
+[Test de rendu d'image avec une résolution de 72](print-to-scale-72.pdf)
+
+- **Test - 2 :** Rendu de l'image avec comme paramètres :
+    - Résolution : 255ppp
+    - dimensions : 400x240 "mm"
+![Test de rendu d'image avec une résolution de 250](inkmap-test-250.png)
+
+#### **II.2.1.2 - Conclusion**
+- **Avantages :**
+    - Intégration facile et intuitive dans le code
+    - Populaire auprès des développeurs (source : github)
+    - Options de customisation
+    - Le rendu est satisfaisant
+    - Validé par le ministère français de l'écologie
+    - Basée sur OpenLayers
+- **Désavantages :**
+    - Génération du rendu lente pour les très hautes résolutions
 
 
 &nbsp;
