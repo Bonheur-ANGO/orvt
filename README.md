@@ -248,20 +248,49 @@ Nous avons pu testé l'outil avec différentes résolutions afin de vérifier qu
 - **Test - 1 :** Rendu de l'image avec une résolution de 300ppp
 ![Test de rendu d'image avec une résolution de 300](ol-map-screenshot-300.png)
 
-- **Test - 1 :** Rendu de l'image avec une résolution de 800ppp
+- **Test - 2 :** Rendu de l'image avec une résolution de 800ppp
 ![Test de rendu d'image avec une résolution de 800](ol-map-screenshot-800.png)
 
 #### **II.2.1.2 - Conclusion**
 - **Avantages :**
     - Intégration facile et intuitive dans le code
     - Options de customisation
-    - Le rendu est très satisfaisant lorsque l'on applique une haute réslution
+    - Le rendu est très satisfaisant
 - **Désavantages :**
     - Faible utilisation de la librairie (source : github)
 
-### **II.2.1 - Librairie Javascript : ol-map-screenshot**
-ol-map-screenshot est une librairie javascript que l'on peut utiliser pour obtenir une image (capture d'écran) d'une carte web au format PNG, JPEG ou PDF.
+### **II.2.1 - L'outil : Print Maps**
+Print Maps est une application web conçu par un développeur nommé Matthew Petroff. Il a constaté qu'il était très difficile de pouvoir imprimer une carte géographique du fait de la faible résolution de celle. Il a donc conçu cet outil permettant d'obtenir des images de cartes géographiques avec une haute résolution au format PNG ou PDF.
 
+- **Caractéristique de la librairie :**
+    - Image de la carte customisables à travers des options
+    - Prise en charge des formats PNG, PDF
+    - Rendu de la barre d'échelle
+
+- **Options de rendu de l'image :**
+    - dimension : Taille de l'image souhaitée en milimètres ou en inch (longueur et largeur)
+    - Format de rendu (PNG, PDF)
+    - choix du style de la carte
+    - Format d'exportation de l'image
+    - Résolution d'écran
+
+#### **II.2.1.1 - Tests**
+Nous avons testé l'outil avec différentes résolutions afin de vérifier que celle-ci fournis une image de très bonne qualité.
+- **Test - 1 :** Rendu de l'image avec une résolution de 72ppp
+![Test de rendu d'image avec une résolution de 72](print-map-72.png)
+
+- **Test - 2 :** Rendu de l'image avec une résolution de 300ppp
+![Test de rendu d'image avec une résolution de 300](print-map-300.png)
+
+#### **II.2.1.2 - Conclusion**
+- **Avantages :**
+    - Populaire auprès des développeurs (source : github)
+    - Options de customisation
+    - Le rendu est très satisfaisant
+    - Libre de droit
+- **Désavantages :**
+    - N'est pas implémentée avec OpenLayers mais plutôt avec MapBox
+    - N'a pas d'API et nécessite donc de copier le code et de le modifier
 
 
 &nbsp;
