@@ -17,7 +17,17 @@
 - **[I.5. Tuiles vectorielles : symbologie](#i5---tuiles-vectorielles--symbologie)**
 - **[I.6. Rasterisation](#i6---rasterisation)**
 - **[II - Etat de l'art des solutions techniques permettant d'effectuer une rasterisation de flux de vecteurs tuilés à l'IGN](#ii---etat-de-lart-des-solutions-techniques-permettant-deffectuer-une-rasterisation-de-flux-de-vecteurs-tuilés-à-lign)**
-**[II.1 - Objectif](#ii1---objectif)**
+- **[II.1 - Objectif](#ii1---objectif)**
+-  **[II.2 - Solutions techniques](#ii2---solutions-techniques)**
+    - **[II.2.1 - Librairie Javascript : ol-map-screenshot](#ii21---librairie-javascript--ol-map-screenshot)**
+        -  **[II.2.1.1 - Tests](#ii211---tests)**
+        -  **[II.2.1.2 - Conclusion](#ii212---conclusion)**
+    - **[II.2.2 - L'outil' : Print Maps](#ii22---loutil--print-maps)**
+        -  **[II.2.2.1 - Tests](#ii221---tests)**
+        -  **[II.2.2.2 - Tests](#ii222---conclusion)**
+    - **[II.2.3 - La librairie : Ink Map](#ii23---la-librairie--ink-map)**
+        -  **[II.2.3.1 - Tests](#ii231---tests)**
+        -  **[II.2.3.2 - Conclusion](#ii232---conclusion)**
 
 ## **Glossaire**
 **OGC :** Open Géospatial Consortium
@@ -43,7 +53,7 @@
 # **I - Introduction**
 
 ## **I.1 - Système d'information géographique**
-Un système d'information géographique est un système d'information composé de matériels, d'outils informatiques, de logiciels et de personnel qualifié, spécialement conçu pour recueillir, stocker, analyser, traiter, gérer et diffuser les données géographiques. On appelle donnée géographique une donnée contenant une référence à un lieu ou une position des entités à la surface de la terre. Elles sont utilisées dans plusieurs domaines notamment de la cadre de la recherche scientifique, dans le domaine des transport, de l'agriculture etc...
+Un système d'information géographique est un système d'information composé de matériels, d'outils informatiques, de logiciels et de personnel qualifié, spécialement conçu pour recueillir, stocker, analyser, traiter, gérer et diffuser les données géographiques[^1] . On appelle donnée géographique une donnée contenant une référence à un lieu ou une position des entités à la surface de la terre. Elles sont utilisées dans plusieurs domaines notamment de la cadre de la recherche scientifique, dans le domaine des transport, de l'agriculture etc...
 
 
 ### **I.1.1 - Acquisition des données géographiques**
@@ -264,8 +274,8 @@ Nous avons pu testé l'outil avec différentes résolutions afin de vérifier qu
 - **Désavantages :**
     - Faible utilisation de la librairie (source : github)
 
-### **II.2.1 - L'outil : Print Maps**
-Print Maps est une application web conçu par un développeur nommé Matthew Petroff. Il a constaté qu'il était très difficile de pouvoir imprimer une carte géographique du fait de la faible résolution de celle. Il a donc conçu cet outil permettant d'obtenir des images de cartes géographiques avec une haute résolution au format PNG ou PDF. Contrairement aux autres outils, cet outil utilise les source de données provenant de Mapbox.
+### **II.2.2 - L'outil : Print Maps**
+Print Maps est une application web conçu par un développeur nommé Matthew Petroff. Il a constaté qu'il était très difficile de pouvoir imprimer une carte géographique du fait de la faible résolution de celle. Il a donc conçu cet outil permettant d'obtenir des images de cartes géographiques avec une haute résolution au format PNG ou PDF. Contrairement aux autres outils, cet outil utilise les source de données provenant de Mapbox. Vous trouverez la démo de l'outil [ici](https://printmaps.mpetroff.net/)
 
 - **Caractéristique de la librairie :**
     - Image de la carte customisables à travers des options
@@ -279,7 +289,7 @@ Print Maps est une application web conçu par un développeur nommé Matthew Pet
     - Format d'exportation de l'image
     - Résolution d'écran
 
-#### **II.2.1.1 - Tests**
+#### **II.2.2.1 - Tests**
 Nous avons testé l'outil avec différentes résolutions afin de vérifier que celle-ci fournis une image de très bonne qualité.
 - **Test - 1 :** Rendu de l'image avec comme paramètres :
     - Résolution : 72ppp
@@ -291,7 +301,7 @@ Nous avons testé l'outil avec différentes résolutions afin de vérifier que c
     - dimensions : 400x240 "mm"
 ![Test de rendu d'image avec une résolution de 300](print-map-300.png)
 
-#### **II.2.1.2 - Conclusion**
+#### **II.2.2.2 - Conclusion**
 - **Avantages :**
     - Populaire auprès des développeurs (source : github)
     - Options de customisation
@@ -303,8 +313,8 @@ Nous avons testé l'outil avec différentes résolutions afin de vérifier que c
     - N'a pas d'API et nécessite donc de copier le code et de le modifier
 
 
-### **II.2.1 - La librairie : Ink Map**
-Ink Map est une librairie javascript basée sur open Layers capable de produire des images de carte. InkMap a été développé par camptocamp une entreprise basée en France, et a été entièrement financée par le ministère français de l'écologie. Elle a été développée afin d'obtenir des cartes de haute résolution imprimable à partir du navigateur.
+### **II.2.3 - La librairie : Ink Map**
+Ink Map est une librairie javascript basée sur open Layers capable de produire des images de carte. InkMap a été développé par camptocamp une entreprise basée en France, et a été entièrement financée par le ministère français de l'écologie. Elle a été développée afin d'obtenir des cartes de haute résolution imprimable à partir du navigateur. Vous trouverez la démo de la librairie [ici](https://camptocamp.github.io/inkmap/main/)
 
 - **Caractéristique de la librairie :**
     - Image de la carte customisables à travers des options
@@ -318,7 +328,7 @@ Ink Map est une librairie javascript basée sur open Layers capable de produire 
     - Vue de la barre d'échelle
     - projection
 
-#### **II.2.1.1 - Tests**
+#### **II.2.3.1 - Tests**
 Nous avons testé l'outil avec différentes résolutions afin de vérifier que celle-ci fournis une image de très bonne qualité.
 - **Test - 1 :** Rendu de l'image avec comme paramètres :
     - Résolution : 72ppp
@@ -330,7 +340,7 @@ Nous avons testé l'outil avec différentes résolutions afin de vérifier que c
     - dimensions : 400x240 "mm"
 ![Test de rendu d'image avec une résolution de 250](inkmap-test-250.png)
 
-#### **II.2.1.2 - Conclusion**
+#### **II.2.3.2 - Conclusion**
 - **Avantages :**
     - Intégration facile et intuitive dans le code
     - Populaire auprès des développeurs (source : github)
@@ -341,22 +351,20 @@ Nous avons testé l'outil avec différentes résolutions afin de vérifier que c
 - **Désavantages :**
     - Génération du rendu lente pour les très hautes résolutions
 
-### **II.2.1 - La librairie : print-to-scale**
-Ink Map est une librairie javascript basée sur open Layers capable de produire des images de carte. InkMap a été développé par camptocamp une entreprise basée en France, et a été entièrement financée par le ministère français de l'écologie. Elle a été développée afin d'obtenir des cartes de haute résolution imprimable à partir du navigateur.
+### **II.2.4 - OpenLayers : print-to-scale**
+OpenLayers propose différentes exemples pour son utilisation sur son site internet. Parmis les exemples on retrouve print-to-scale, qui démontre comment l'on peut obtenir une image d'une carte ave différentes mise en page en se basant sur la bibliothèque jspdf. Le rendu est un PDF de l'image de la carte produite au format JPEG et insérée par la suite dans le PDF. Vous trouverez la démo de la librairie [ici](https://openlayers.org/en/latest/examples/print-to-scale.html)
 
-- **Caractéristique de la librairie :**
+- **Caractéristique de la l'outil :**
     - Image de la carte customisables à travers des options
-    - Prise en charge du format PNG
+    - Prise en charge du format PDF
 
 - **Options de rendu de l'image :**
-    - Tableau de couche d'objets
-    - dimension : Taille de l'image souhaitée en milimètres ou en inch (longueur et largeur)
+    - dimension : Taille de l'image souhaitée en millimètre (longueur et largeur)
     - Résolution d'écran
-    - Longitude et latitude du centre de la carte
+    - échelle
     - Vue de la barre d'échelle
-    - projection
 
-#### **II.2.1.1 - Tests**
+#### **II.2.4.1 - Tests**
 Nous avons testé l'outil avec différentes résolutions afin de vérifier que celle-ci fournis une image de très bonne qualité.
 - **Test - 1 :** Rendu de l'image avec comme paramètres :
     - Résolution : 72ppp
@@ -365,23 +373,22 @@ Nous avons testé l'outil avec différentes résolutions afin de vérifier que c
 
 - **Test - 2 :** Rendu de l'image avec comme paramètres :
     - Résolution : 255ppp
-    - dimensions : 400x240 "mm"
-![Test de rendu d'image avec une résolution de 250](inkmap-test-250.png)
+    - dimensions : 210x297 "mm"\
+[Test de rendu d'image avec une résolution de 300](print-to-scale-300.pdf)
 
-#### **II.2.1.2 - Conclusion**
+#### **II.2.4.2 - Conclusion**
 - **Avantages :**
-    - Intégration facile et intuitive dans le code
-    - Populaire auprès des développeurs (source : github)
+    - Intégration facile
     - Options de customisation
-    - Le rendu est satisfaisant
-    - Validé par le ministère français de l'écologie
     - Basée sur OpenLayers
+    - - Génération du rendu rapide pour les très hautes résolutions
 - **Désavantages :**
-    - Génération du rendu lente pour les très hautes résolutions
+    - Rendu pas très satisfaisant (du fait que l'image est d'abord généré en JPEG puis inséré dans le pdf)
 
 
 &nbsp;
 # **Sources**
+[^1]: https://fr.wikipedia.org/wiki/Syst%C3%A8me_d'information_g%C3%A9ographique
 * https://geoservices.ign.fr/documentation/services/api-et-services-ogc/images-tuilees-wmts-ogc
 * https://docs.qgis.org/2.8/fr/docs/gentle_gis_introduction/vector_data.html
 * https://www.sigterritoires.fr/index.php/geoserver-avance-le-tuilage-principes/
