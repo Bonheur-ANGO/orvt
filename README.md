@@ -101,7 +101,7 @@ Les tuiles (rasters ou vecteurs) sont des paquets de données géographiques pr�
 
 
 ## **I.4 - Web Mapping**
-Une carte géographique est une représentation graphique d'un espace géographique. Avec l'évolution des technologies et d'internet, le besoin d'affichage de cartes géographiques sur tous types d'écrans devient de plus en plus demandé par les utilisateurs et cela est possible grâce au Web mapping. Le web mapping ou cartographie web est la forme de cartographie qui fait usage d’internet afin de concevoir, traiter, produire et publier des cartes géographiques. Ces communications sont possibles grâce à un ensemble de règles appelées protocole. L’OGC est une organisation internationale qui implémente des standards pour les services et le contenu géospatial, le traitement de données géographiques et les formats d’échange.
+Une carte géographique est une représentation graphique d'un espace géographique. Avec l'évolution des technologies et d'internet, le besoin d'affichage de cartes géographiques sur tous types d'écrans devient de plus en plus demandé par les utilisateurs et cela est possible grâce au Web mapping[^2]. Le web mapping ou cartographie web est la forme de cartographie qui fait usage d’internet afin de concevoir, traiter, produire et publier des cartes géographiques. Ces communications sont possibles grâce à un ensemble de règles appelées protocole. L’OGC est une organisation internationale qui implémente des standards pour les services et le contenu géospatial, le traitement de données géographiques et les formats d’échange.
 Parmi les spécifications, les plus couramment utilisés à l'IGN sont :
 
 - **Web Feature Service (WFS)** : Permet au moyen d’une URL formatée, d’interroger des 
@@ -125,7 +125,7 @@ serveurs cartographiques afin de manipuler des objets géographiques vectoriels.
         - COUNT : le nombre maximum d’éléments retournés (MAXFEATURES si version 1.0.0, COUNT si version 2.0.0)
         - FILTER : le filtre personnalisé qui va permettre d’effectuer des sélection sur les éléments à récupérer.
 
-    La structure d'une URL WFS est la suivante : http://host/path?name=value& où name=value& correspond à une liste de paramètres
+    La structure d'une URL WFS est la suivante : http://host/path?name=value& où name=value& correspond à une liste de paramètres[^3]:
 
 
 -  **Web Map Service (WMS)** : Permet de mettre à disposition d’utilisateurs distants des images géoréférencées, via une simple requête HTTP, à partir de données sources raster (image) ou vecteur. Le protocole WMS permet d'effectuer 3 principales requêtes :
@@ -149,7 +149,7 @@ serveurs cartographiques afin de manipuler des objets géographiques vectoriels.
         - DPI : densité de l’image attendue en “dot per inch” ou “pixel par pouce” (par défaut : 90,7 DPI).
         - OUTPUTFORMAT correspond au format de sortie de l'image (exemple : image/png).
 
-        La structure d'une URL WMS est la suivante : http://host/path?{name=value&} où name=value& correspond à une liste de paramètres
+        La structure d'une URL WMS est la suivante : http://host/path?{name=value&} où name=value& correspond à une liste de paramètres[^4]
 
 - **Web Map Tile Service (WMTS)** : Permet d'obtenir des cartes géo-référencées tuilées à partir d'un serveur. Ce service est comparable au Web Map Service (WMS) mais tandis que le WMS permet de faire des requêtes nécessitant une certaine puissance de calcul côté serveur à chaque requête, le WMTS met l'accent sur la performance et ne permet de requêter que des images pré-calculées (tuiles) par le serveur. Le protocole WMTS permet d'effectuer 3 principales requêtes :
     - GetCapabilities : retourne les méta-données qui décrivent le contenu du service et les paramètres acceptés
@@ -169,12 +169,12 @@ serveurs cartographiques afin de manipuler des objets géographiques vectoriels.
         - TILEROW : Le numéro de ligne du coin supérieur gauche de la tuile
         - TILECOL : Le numéro de colonne du coin supérieur gauche de la tuile
 
-    La structure d'une URL WMTS est la suivante : http://host/path?{name=value&} où name=value& correspond à une liste de paramètres. 
+    La structure d'une URL WMTS est la suivante : http://host/path?{name=value&} où name=value& correspond à une liste de paramètres.[^5]
 
 
 - **Tile Map Service (TMS)** : Le service TMS est comme le service WFS. Il Transmet des données géographiques vectorielles mais sous formes de tuiles vecteurs. Le protocole TMS permet d'effectuer 2 principales opérations :
     - Accès aux capacités du service : renvoie les ressources disponibles, les styles prédéfinis
-    - Accès à une tuile : renvoie une tuile vectorielle pré-calculée
+    - Accès à une tuile : renvoie une tuile vectorielle pré-calculée[^6]
 
 
 ![Protocoles](tablea_comparaison_protocoles.PNG)
@@ -193,7 +193,7 @@ manière suivante (voir figure 7) :
     - Le serveur reçoit la requête
     - Le serveur extrait les données nécessaires à la constitution de la carte web géographique à partir de la base de données
     - Le serveur transmets les données géographiques
-    - La carte géographique web est constituée à partir des données géographiques reçues du serveur
+    - La carte géographique web est constituée à partir des données géographiques reçues du serveur [^7]:
 
 ![architecture web mapping sans tuilage](architecture_web_mapping_sans_tuilage.png)
 
@@ -208,7 +208,7 @@ manière suivante (voir figure 7) :
     transmet au client
     - Le serveur transmets les données géographiques permettant de fabriquer la carte web côté client
     - La carte géographique web est constituée à partir des tuiles vecteurs reçues du 
-    serveur
+    serveur[^7]
 
 ![architecture web mapping avec tuilage](architecture_web_mapping_avec_tuilage.png)
 
@@ -389,14 +389,9 @@ Nous avons testé l'outil avec différentes résolutions afin de vérifier que c
 &nbsp;
 # **Sources**
 [^1]: https://fr.wikipedia.org/wiki/Syst%C3%A8me_d'information_g%C3%A9ographique
-* https://geoservices.ign.fr/documentation/services/api-et-services-ogc/images-tuilees-wmts-ogc
-* https://docs.qgis.org/2.8/fr/docs/gentle_gis_introduction/vector_data.html
-* https://www.sigterritoires.fr/index.php/geoserver-avance-le-tuilage-principes/
-* https://docs.mapbox.com/data/tilesets/guides/vector-tiles-introduction/
-* https://geoservices.ign.fr/documentation/services/api-et-services-ogc/tuiles-vectorielles-tmswmts
-* https://docs.qgis.org/2.8/fr/docs/training_manual/basic_map/symbology.html
-* https://docs.mapbox.com/mapbox-gl-js/style-spec/
-* https://docs.qgis.org/3.16/fr/docs/user_manual/working_with_vector_tiles/vector_tiles_properties.html
-* https://fr.wikipedia.org/wiki/Rast%C3%A9risation
-* https://github.com/jmmluna/ol-map-screenshot
-* https://www.camptocamp.com/fr/actualites-evenements/inkmap
+[^2]: https://fr.wikipedia.org/wiki/Cartographie_en_ligne
+[^3]: https://geoservices.ign.fr/documentation/services/api-et-services-ogc/donnees-vecteur-wfs-ogc
+[^4]: https://geoservices.ign.fr/documentation/services/api-et-services-ogc/images-wms-ogc
+[^5]: https://geoservices.ign.fr/documentation/services/api-et-services-ogc/images-tuilees-wmts-ogc
+[^6]: https://geoservices.ign.fr/documentation/services/api-et-services-ogc/tuiles-vectorielles-tmswmts
+[^7]: https://www.sigterritoires.fr/index.php/geoserver-avance-le-tuilage-principes/
