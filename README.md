@@ -64,6 +64,8 @@ Les données géographiques en mode vecteur permettent de modéliser le monde r�
 
 ![Les différentes formes de vecteurs](schema_vecteur_formes.png)
 
+> source : https://www.emse.fr/tice/uved/SIG/Glossaire/co/vecteur_mode.html
+
 #### **II.1.2 - Table attribuaire**
 Les objets peuvent être par exemple des maisons, des routes ou arbres. Ils sont stockés 
 dans des bases de données avec leurs coordonnées spatiales et leurs données attributaires ou métadonnées. Les données ou tables attributaires permettent de décrire les propriétés de l'entité. Les objets sont regroupés par thème dans les tables. Par exemple on regroupe toutes les entités représentant des batiments dans une même table. Une table est composé de lignes et de colonnes. Chaque colonne représente une caractéristique de l'entité comme la surface, la hauteur ou la date de construction d'un bâtiment. Chaque ligne représente une entité.
@@ -77,12 +79,16 @@ Les données géographiques en mode raster sont des images constitués de plusie
 
 ![raster](raster_pix.jpg)
 
+> source : https://naturagis.fr/cartographie-sig/difference-vecteur-raster/
+
 
 ### **II.3 - Le principe de couches**
 Si l’on souhaite représenter différents types d’objets on utilise le principe de superposition 
 de couches qui consiste à disposer différentes couches d’objets les unes sur les autres afin de constituer une carte. Chaque couche regroupes les données appartenant à une même thématique ou classe d'objets (immeubles, routes etc...)
 
 ![superposition des couches](superposition_des_couches.jpg)
+
+> source : https://www.cc-molsheim-mutzig.fr/decouvrir/cartes.htm
 
 ### **II.4 - Tuiles**
 Les tuiles (rasters ou vecteurs) sont des paquets de données géographiques prédécoupées en forme de dalles par le serveur, prêtes à être transférées lorsqu’une requête est émise. Elles peuvent avoir différentes tailles : 64x64, 256x256, 512x512 pixels. Les services web utilisent le plus souvent des tailles de 256x256. Ces tuiles sont produites par le serveur en fonction de l’échelle de visualisation. On appelle cela le principe de la pyramide. À chaque niveau de zoom, des tuiles spécifiques sont fournis. Les tuiles présentent plusieurs avantages d'utilisation dont :
@@ -91,9 +97,10 @@ Les tuiles (rasters ou vecteurs) sont des paquets de données géographiques pr�
 
 
 ![Tableau récapitulatif](vector_tiles_pyramid_structure.png)
+> source : https://docs.qgis.org/3.16/fr/docs/user_manual/working_with_vector_tiles/vector_tiles_properties.html
 
 
-### **II.5 - Web Mapping**
+### **II.5 - Cartographie web**
 Une carte géographique est une représentation graphique d'un espace géographique. Avec l'évolution des technologies et d'internet, le besoin d'affichage de cartes géographiques sur tous types d'écrans devient de plus en plus demandé par les utilisateurs et cela est possible grâce au Web mapping[^2]. Le web mapping ou cartographie web est la forme de cartographie qui fait usage d’internet afin de concevoir, traiter, produire et publier des cartes géographiques. Ces communications sont possibles grâce à un ensemble de règles appelées protocole. L’OGC est une organisation internationale qui implémente des standards pour les services et le contenu géospatial, le traitement de données géographiques et les formats d’échange.
 Parmi les spécifications, les plus couramment utilisés à l'IGN sont :
 
@@ -112,41 +119,41 @@ serveurs cartographiques afin de manipuler des objets géographiques vectoriels.
 ![Protocoles](tablea_comparaison_protocoles.PNG)
 
 
+
 ### **II.6 - Architecture de la cartographie web**
 La cartographie web se base sur une architecture client/serveur:
 - Client : Ici généralement représenté par un navigateur web, permet de visualiser les données géographiques transmises depuis le serveur
 - Serveur : Traite les données géographiques et les transmet
 
-Selon l'utilisation du service tuilage ou non, le processus de production de données géographiques du côté serveur se fait différemment
 
-- Architecture sans utilisation du service de tuilage : La communication s’effectue de la
-manière suivante (voir figure 7) :
-    - Le client envoie une requête pour l’affichage d’une carte web géographique
-    - Le serveur reçoit la requête
-    - Le serveur extrait les données nécessaires à la constitution de la carte web géographique à partir de la base de données
-    - Le serveur transmets les données géographiques
-    - La carte géographique web est constituée à partir des données géographiques reçues du serveur [^7]:
+La communication s’effectue de la manière suivante :
+- Le client envoie une requête pour l’affichage d’une carte web géographique
+- Le serveur reçoit la requête
+- Le serveur extrait les données nécessaires à la constitution de la carte web géographique à partir de la base de données
+- Le serveur transmets les données géographiques
+- La carte géographique web est constituée à partir des données géographiques reçues du serveur [^7]:
 
-![architecture web mapping sans tuilage](architecture_web_mapping_sans_tuilage.png)
+![architecture cartographie web](architecture_cartographie_web.png)
 
-- Architecture avec utilisation du service de tuilage : La communication s’effectue de la
-manière suivante (voir figure 7) :
-    - Le client envoie une requête pour l’affichage d’une carte web géographique
-    - Le serveur reçoit la requête
-    - Le serveur extrait les données nécessaires à la constitution de la carte web 
-    géographique à partir de la base de données
-    - Le serveur sélectionne les tuiles si elles avaient déjà été chargée ou sinon les 
-    fabrique à la volée par rapport à l’échelle de visualisation et la zone concernée et les 
-    transmet au client
-    - Le serveur transmets les données géographiques permettant de fabriquer la carte web côté client
-    - La carte géographique web est constituée à partir des tuiles vecteurs reçues du 
-    serveur[^7]
-
-![architecture web mapping avec tuilage](architecture_web_mapping_avec_tuilage.png)
 
 ### **II.8 - Flux de vecteurs tuilés**
+L'on parle de flux de vecteurs tuilés lorsqu'il y'a un serveur qui délivrera des tuiles vectorielles lorsque des requêtes seront émise par le serveur.
 
-Comme montré dans le chapitre précédent les tuiles vectorielles sont fournies au client depuis le serveur par 
+Architecture avec utilisation du service de tuilage : La communication s’effectue de la
+manière suivante :
+- Le client envoie une requête pour l’affichage d’une carte web géographique
+- Le serveur reçoit la requête
+- Le serveur extrait les données nécessaires à la constitution de la carte web 
+géographique à partir de la base de données
+- Le serveur sélectionne les tuiles en fonction du niveau de zoom si elles avaient déjà été chargée ou sinon les 
+fabrique à la volée par rapport à l’échelle de visualisation et la zone concernée et les 
+transmet au client
+- Le serveur transmets les données géographiques permettant de fabriquer la carte web côté client
+- La carte géographique web est constituée à partir des tuiles vecteurs reçues du 
+serveur[^7]
+
+![flux de vecteurs tuilés](flux_de_vecteurs_tuilés.png)
+
 
 
 ### **II.8 - Tuiles vectorielles : symbologie**
@@ -155,18 +162,19 @@ Comme dans notre étude nous nous intéréssons principalement aux tuiles vector
 - [MapBox GL JS](https://docs.mapbox.com/mapbox-gl-js/style-spec/) : document de style au format JSON créé par MapBox.
 - [Carto CSS](https://cartocss.readthedocs.io/en/latest/) : syntaxe similaire au CSS, permettant de créer un style pour des données géographiques.
 
-<--![Explication du fichier de style](explication_fichier_de_style.png)
+[Explication du fichier de style](explication_fichier_de_style.png)
 
 
 **Le fichier de style** est appliqué côté client comme montré dans la figure ci-dessous :
 
 
-![Illustration application du fichier de style](illustration_application_fichier_de_style.png)-->
+![Illustration application du fichier de style](illustration_application_fichier_de_style.png)
 
 ## **II.8 - Rasterisation**
 De manière globale, la rasterisation est un procédé qui consiste à convertir une image vectorielle en une image matricielle destinée à être affichée sur un écran ou imprimée par un matériel d'impression. Dans le cadre des SIG, la rastérisation est le passage du mode vecteur au mode raster : c'est la conversion de vecteurs (point, polygone, ligne) en une grille matricielle de pixels où chaque pixel comprend une valeur. Une chose devient donc essentielle lors de la rasterisation, c'est la résolution de l'image obtenue. La résolution de l'image fait en sorte d'obtenir une image nettement clair en ayant le plus de pixel. Plus il y aura de pixel plus les informations sur la carte seront facilement distinguable.
 
 ![rasterisation](rasterisation.png)
+> source : https://www.researchgate.net/figure/Principe-de-la-rasterisation-conversion-du-format-vecteur-vers-le-format-raster_fig1_342344729
 
 &nbsp;
 # **III - Etat de l'art des solutions techniques permettant d'effectuer une rasterisation de flux de vecteurs tuilés à l'IGN**
