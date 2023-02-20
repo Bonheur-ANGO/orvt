@@ -49,13 +49,14 @@
 **PDF :** Portable Document Format est un format de document très utilisée sur différents appareils informatiques(tablettes, ordinateurs, téléphones portables)
 
 **NPM :** Node Package Manager est un gestionnaire de librairies javascript
+**PBF :** Protocol Buffer Binary Format
 
 # **I - Introduction**
 Les données géographiques vectorielles permettent de représenter les entités du monde réel sous forme de dessin. Ces données géographiques peuvent être délivrées côté client sous formes de dalles lorsqu'une requête est émise. Cela s'appelle des tuiles vectorielles. L'utilisation de tuiles vectorielles offre une rapidité d'accès aux données car ces tuiles sont pré calculées ou fabriquées à la volée lorsqu'une requête est émise, et une symbolisation côté client. L'utilisateur peut donc appliquer le style désiré côté client en créant son fichier de style. Avec l'utilisation de plus en plus fréquente des cartes sur le web et sur des applications mobiles, l'utilisateur peut parfois avoir besoin d'obtenir une image de cette carte personnalisée (avec son style) ou de l'imprimer. Cela consiste donc à rasteriser un flux de tuiles vecteurs. Actuellement il n'existe pas de solutions techniques à l'IGN permettant de répondre à ce besoin. L'objectif pour nous donc sera d'effectuer des propositions de différentes solutions techniques permettant de faire une rasterisation de flux de vecteurs tuilés à travers cet état de l'art.
 
 
 ## **II. - Données géographiques : vecteur et raster**
-*********************
+
 Il existe deux manières de représenter les données géographiques de manière numérique à savoir : le mode vecteur et le mode raster.
 
 ### **II.1 - Mode vecteur**
@@ -101,7 +102,7 @@ Les tuiles (rasters ou vecteurs) sont des paquets de données géographiques pr�
 
 
 ### **II.5 - Cartographie web**
-Une carte géographique est une représentation graphique d'un espace géographique. Avec l'évolution des technologies et d'internet, le besoin d'affichage de cartes géographiques sur tous types d'écrans devient de plus en plus demandé par les utilisateurs et cela est possible grâce au Web mapping[^2]. Le web mapping ou cartographie web est la forme de cartographie qui fait usage d’internet afin de concevoir, traiter, produire et publier des cartes géographiques. Ces communications sont possibles grâce à un ensemble de règles appelées protocole. L’OGC est une organisation internationale qui implémente des standards pour les services et le contenu géospatial, le traitement de données géographiques et les formats d’échange.
+Une carte géographique est une représentation graphique d'un espace géographique. Avec l'évolution des technologies et d'internet, le besoin d'affichage de cartes géographiques sur tous types d'écrans devient de plus en plus demandé par les utilisateurs et cela est possible grâce au Web mapping. Le web mapping ou cartographie web est la forme de cartographie qui fait usage d’internet afin de concevoir, traiter, produire et publier des cartes géographiques[^2]. Ces communications sont possibles grâce à un ensemble de règles appelées protocole. L’OGC est une organisation internationale qui implémente des standards pour les services et le contenu géospatial, le traitement de données géographiques et les formats d’échange.
 Parmi les spécifications, les plus couramment utilisés à l'IGN sont :
 
 - **Web Feature Service (WFS)** : Permet au moyen d’une URL formatée, d’interroger des 
@@ -137,7 +138,7 @@ La communication s’effectue de la manière suivante :
 
 
 ### **II.8 - Flux de vecteurs tuilés**
-L'on parle de flux de vecteurs tuilés lorsqu'il y'a un serveur qui délivrera des tuiles vectorielles lorsque des requêtes seront émise par le serveur.
+L'on parle de flux de vecteurs tuilés lorsqu'il y'a un serveur qui délivre des tuiles vectorielles lorsque des requêtes seront émise par le serveur.
 
 Architecture avec utilisation du service de tuilage : La communication s’effectue de la
 manière suivante :
@@ -146,17 +147,30 @@ manière suivante :
 - Le serveur extrait les données nécessaires à la constitution de la carte web 
 géographique à partir de la base de données
 - Le serveur sélectionne les tuiles en fonction du niveau de zoom si elles avaient déjà été chargée ou sinon les 
-fabrique à la volée par rapport à l’échelle de visualisation et la zone concernée et les 
-transmet au client
-- Le serveur transmets les données géographiques permettant de fabriquer la carte web côté client
-- La carte géographique web est constituée à partir des tuiles vecteurs reçues du 
-serveur[^7]
+fabrique à la volée par rapport à l’échelle de visualisation et la zone concernée et les transmet au client au format PBF
+- Le serveur transmet les tuiles permettant de fabriquer la carte web côté client
+- La carte géographique web est constituée à partir des tuiles vecteurs reçues du serveur
+- Les tuiles sont mise en cache sur le serveur[^7]
 
 ![flux de vecteurs tuilés](flux_de_vecteurs_tuilés.png)
 
 
+### **II.10 - Tuiles vectorielles : Format PBF**
 
-### **II.8 - Tuiles vectorielles : symbologie**
+Le format PBF est un format développé par google permettant de sérialiser des données structurées. Le PBF est simple d'utilisation, performant et a été conçu pour remplacer à long terme le format XML[^8]. OSM c'est donc basé sur ce format pour stocker et échanger les données géographiques vecteurs. Les données géographiques sont stockées au format PBF d'OSM sous forme de messages et organisés en blocs. On retrouve deux types de bloc dans les fichiers PBF à savoir :
+- OSMHeader : bloc d'entête et de métadonnées permettant de décrire les propriétés des blocs et des messages.
+- OSMData : bloc contenant les données géospatiales
+
+On distingue 3 types de données géospatiales que l'on peut retrouver dans un fichier PBF:
+- Des noeuds (points)
+- Des chemins (lignes)
+- Des relations (polygones)[^9]
+
+Les tuiles sont donc servies au format PBF d'OSM lorsqu'une requête est envoyée en fonction du niveau de zoom demandé. Elles sont compressées en utilisant le format PBF pour les rendre plus légères et plus faciles à transmettre.
+
+![Transmission des tuiles](transmission_pbf.png)
+
+### **II.10 - Tuiles vectorielles : symbologie**
 
 Comme dans notre étude nous nous intéréssons principalement aux tuiles vectorielles, il est plus que nécessaire de parler de symbologie. La symbolologie est l'ensemble d'éléments (palette de couleurs, polices d'écriture, icônes...), utilisé afin de donner une apparence visuelle à la carte et ainsi mettre en valeur les informations en fonction de leur importance. L'un des avantages comme on le disait plus haut des tuiles vectorielles est qu'elles offrent la possibilité à un utilisateur de créer sa propre symbologie côté client à travers la création d'un fichier de style. Le fichier de style va permettre de représenter chaque entité comme le souhaite l'utilisateur à travers des règles de styles bien définis. Plusieurs normes permettent de créer une symbologie côté client à savoir :
 - [MapBox GL JS](https://docs.mapbox.com/mapbox-gl-js/style-spec/) : document de style au format JSON créé par MapBox.
@@ -170,11 +184,15 @@ Comme dans notre étude nous nous intéréssons principalement aux tuiles vector
 
 ![Illustration application du fichier de style](illustration_application_fichier_de_style.png)
 
-## **II.8 - Rasterisation**
-De manière globale, la rasterisation est un procédé qui consiste à convertir une image vectorielle en une image matricielle destinée à être affichée sur un écran ou imprimée par un matériel d'impression. Dans le cadre des SIG, la rastérisation est le passage du mode vecteur au mode raster : c'est la conversion de vecteurs (point, polygone, ligne) en une grille matricielle de pixels où chaque pixel comprend une valeur. Une chose devient donc essentielle lors de la rasterisation, c'est la résolution de l'image obtenue. La résolution de l'image fait en sorte d'obtenir une image nettement clair en ayant le plus de pixel. Plus il y aura de pixel plus les informations sur la carte seront facilement distinguable.
+## **II.10 - Rasterisation**
+De manière globale, la rasterisation est un procédé qui consiste à convertir une image vectorielle en une image matricielle destinée à être affichée sur un écran ou imprimée par un matériel d'impression. Dans le cadre des SIG, la rastérisation est le passage du mode vecteur au mode raster : c'est la conversion de vecteurs (point, polygone, ligne) en une grille matricielle de pixels où chaque pixel comprend une valeur.
 
 ![rasterisation](rasterisation.png)
 > source : https://www.researchgate.net/figure/Principe-de-la-rasterisation-conversion-du-format-vecteur-vers-le-format-raster_fig1_342344729
+
+Dans notre cadre nous utilisons des tuiles vectorielles. La rasterisation consistera donc à effectuer une conversion de tuiles vecteurs vers des tuiles rasters. Les tuiles vecteurs sont servies au format pbf en fonction de l'échelle de visualisation. Les outils que nous présenterons doivent permettre de convertir des tuiles au format pbf vers des tuiles au format png avec le même style que l'utilisateur aura définit et sans pour autant qu'il y ait dégradation des informations.
+
+![outil de rasterisation](outil_de_rasterisation.png)
 
 &nbsp;
 # **III - Etat de l'art des solutions techniques permettant d'effectuer une rasterisation de flux de vecteurs tuilés à l'IGN**
@@ -341,3 +359,5 @@ Nous avons testé l'outil avec différentes résolutions afin de vérifier que c
 [^5]: https://geoservices.ign.fr/documentation/services/api-et-services-ogc/images-tuilees-wmts-ogc
 [^6]: https://geoservices.ign.fr/documentation/services/api-et-services-ogc/tuiles-vectorielles-tmswmts
 [^7]: https://www.sigterritoires.fr/index.php/geoserver-avance-le-tuilage-principes/
+[^8]: https://en.wikipedia.org/wiki/Protocol_Buffers
+[^9]: https://wiki.openstreetmap.org/wiki/PBF_Format
